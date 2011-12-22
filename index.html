@@ -4,6 +4,13 @@
   <body>
     <script>
       var socket;
+
+      var badfood = '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345';
+
+      var badsend = function() {
+        send(badfood); // this works fine
+        send(badfood+'6'); // this breaks aleph for all subsequent sends
+      };
     
       var receive = function(message) {
         console.log("--> "+message);
@@ -15,8 +22,8 @@
         }
         if (window.WebSocket) {
           socket = new WebSocket('ws://127.0.0.1:8080');
-          socket.onopen    = function(event) { alert('channel open!'); };
-          socket.onclose   = function(event) { alert('channel closed'); };
+          socket.onopen    = function(event) { console.log('channel open!'); badsend()};
+          socket.onclose   = function(event) { console.log('channel closed'); };
           socket.onmessage = function(event) { receive(event.data); };
         } else {
           alert('Your browser does not support WebSockets yet.');
