@@ -10,6 +10,7 @@
       var badsend = function() {
         send(badfood); // this works fine
         send(badfood+'6'); // this breaks aleph for all subsequent sends
+        send(badfood); // this now fails, where it worked before
       };
     
       var receive = function(message) {

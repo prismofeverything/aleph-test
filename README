@@ -1,13 +1,15 @@
 # aleph-test
 
-FIXME: write description
+This project isolates an issue with aleph websockets where messages larger than 
+125 characters cause the server to hang
 
 ## Usage
 
-FIXME: write
+> lein deps
+> lein run
+> open index.html
 
-## License
+This sends a message of 125 characters from the browser which is written to console,
+then attempts to send one of 126 characters which hangs aleph, so that the next message
+which is again of 125 characters fails to register.
 
-Copyright (C) 2011 FIXME
-
-Distributed under the Eclipse Public License, the same as Clojure.
