@@ -1,0 +1,43 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+      var socket;
+    
+      var receive = function(message) {
+        console.log("--> "+message);
+      };
+    
+      var openWebSocket = function() {
+        if (window.MozWebSocket) {
+          window.WebSocket = window.MozWebSocket;
+        }
+        if (window.WebSocket) {
+          socket = new WebSocket('ws://127.0.0.1:8080');
+          socket.onopen    = function(event) { alert('channel open!'); };
+          socket.onclose   = function(event) { alert('channel closed'); };
+          socket.onmessage = function(event) { receive(event.data); };
+        } else {
+          alert('Your browser does not support WebSockets yet.');
+        }
+      };
+    
+      var closeWebSocket = function() {
+        socket.close();
+      };
+    
+      var send = function(message) {
+        if (!window.WebSocket) { return; }
+        if (socket.readyState == (WebSocket.OPEN || 1)) {
+          console.log("<-- "+message);
+          socket.send(message);
+        } else {
+          alert('The WebSocket is not open!');
+        }
+      };
+    
+      openWebSocket();
+    </script>
+  </body>
+</html>
